@@ -14,3 +14,7 @@ Thumbs.db
 
 # Ignore virtual environment
 venv/ 
+
+# Ignore large data files or models
+data/
+models/
