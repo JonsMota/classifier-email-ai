@@ -37,5 +37,8 @@ def upload_file():
 
     return render_template('result.html', category=category, response=response)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+    return render_template('result.html', category=category, response=response)
+
+# Handler necessário para rodar na Vercel
+def handler(event, context):
+    return app(event, context)
