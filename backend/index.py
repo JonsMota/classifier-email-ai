@@ -1,7 +1,7 @@
 import os
 import nltk
 from flask import Flask, request, render_template
-from classifier import preprocess_email, classify_email, generate_response
+from backend.classifier import preprocess_email, classify_email, generate_response
 from openai.error import RateLimitError
 
 # Baixar os recursos necessários do NLTK
