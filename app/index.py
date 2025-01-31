@@ -1,3 +1,4 @@
+import os
 from classifier import preprocess_email, classify_email, generate_response
 from flask import Flask, request, render_template
 from openai.error import RateLimitError
@@ -27,4 +28,5 @@ def upload():
     return render_template('result.html', category=category, response=response)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
