@@ -1,7 +1,8 @@
 flask
+transformers
+torch
 pdfminer.six
 nltk
 openai
 python-dotenv
 gunicorn
-waitress
