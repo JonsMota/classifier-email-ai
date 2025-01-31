@@ -1,6 +1,5 @@
-from flask import Flask, request, render_template
-import os
 from classifier import preprocess_email, classify_email, generate_response
+from flask import Flask, request, render_template
 from openai.error import RateLimitError
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
