@@ -1,16 +1,14 @@
-import sys
 import os
 import nltk
 from flask import Flask, request, render_template
-from classifier import preprocess_email, classify_email, generate_response  # Importa diretamente de 'classifier'
+from classifier import preprocess_email, classify_email, generate_response
 from openai.error import RateLimitError
 
-# Baixar os recursos 'stopwords' e 'punkt' do NLTK
+# Baixar os recursos necessários do NLTK
 nltk.download('stopwords')
 nltk.download('punkt')
 
-sys.path.append(os.path.join(os.path.dirname(__file__), 'backend'))  # Adiciona o diretório 'backend' ao caminho de importação
-
+# Configuração do Flask
 app = Flask(__name__, template_folder='../frontend', static_folder='../static')
 
 @app.route('/')
@@ -28,18 +26,16 @@ def upload_file():
         except UnicodeDecodeError:
             continue
     if content is None:
-        return "Failed to decode file", 400
+        return "Falha ao decodificar arquivo", 400
 
     preprocessed_content = preprocess_email(content)
     category = classify_email(preprocessed_content)
     try:
         response = generate_response(category, content)
     except RateLimitError:
-        return "Rate limit exceeded. Please try again later.", 429
+        return "Limite de requisições excedido. Tente novamente mais tarde.", 429
 
     return render_template('result.html', category=category, response=response)
 
 if __name__ == '__main__':
-    from waitress import serve
-    serve(app, host='0.0.0.0', port=os.environ.get('PORT', 5000))
-    
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))

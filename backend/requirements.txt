@@ -1,0 +1,7 @@
+flask
+pdfminer.six
+nltk
+openai
+python-dotenv
+gunicorn
+waitress
